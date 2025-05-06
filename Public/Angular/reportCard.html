@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="reportCardApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Card</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            margin:20px;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        table{
+            width:100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding:10px;
+            border: 2px solid #333;
+            text-align: center;
+        }
+        .info{
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body ng-controller="ReportCardController">
+    <h1>Mahavir Education Trust<br>Shah & Anchor Kutchhi Engineering College Chembur</h1>
+    <h2>Grade Card - B.TECH INFORMATION TECHNOLOGY</h2>
+
+    <div class="info">
+        <p><strong>Name:</strong>{{student.name}}</p>
+        <p><strong>Seat No:</strong>{{student.seatNo}}</p>
+        <p><strong>PRN:</strong>{{student.prn}}</p>
+    </div>   
+    <table>
+        <thead>
+            <tr>
+                <th>Sr. No.</th>
+                <th>Course Code</th>
+                <th>Course Title</th>
+                <th>Grade</th>
+                <th>Grade Point (G) </th>
+                <th>Course Credit (C) </th>
+                <th>Course Points (G x C) </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="course in courses">
+                <td>{{ $index + 1 }}</td>
+                <td>{{ course.code }}</td>
+                <td>{{ course.title }}</td>
+                <td>{{ course.grade }}</td>
+                <td>{{ course.gradePoint }}</td>
+                <td>{{ course.credit }}</td>
+                <td>{{ course.gradePoint * course.credit }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Total Credits: {{ getTotalCredits() }}</h3>
+    <h3>Total Credits Points: {{ getTotalCreditsPoints() }}</h3>
+    <h3>SGPA: {{ calculateSGPA() | number:2 }}</h3>
+    <h3>CGPA: {{ calculateCGPA() | number:2 }}</h3>
+
+    <script>
+        angular.module('reportCardApp',[])
+        .controller('ReportCardController', function($scope){
+            $scope.student = {
+                name: 'Mishra Aayush Mahesh',
+                seatNo: 'RWI5062',
+                prn: '22UF17596IT031'
+ 
+            };
+
+            $scope.courses = [
+          { code: 'ITCR0501', title: 'SOFTWARE ENGINEERING', grade: 'C', gradePoint: 7, credit: 3 },
+          { code: 'ITCR0502', title: 'CRYPTOGRAPHY AND NETWORK SECURITY', grade: 'A', gradePoint: 10, credit: 3},
+          { code: 'ITCR0503', title: 'ENGINEERING MARHEMATICS', grade: 'A', gradePoint: 9, credit: 3 },
+          { code: 'ITCR0504', title: 'ENGINEERING GRAPHICS', grade: 'B', gradePoint: 9, credit: 3 },
+          { code: 'ITCR0505', title: 'INTERNET PROGRAMMING', grade: 'A', gradePoint: 10, credit: 3 },
+        ];
+
+        $scope.getTotalCredits = function(){
+            return $scope.courses.reduce((sum , c) => sum + c.credit , 0);
+        };
+        $scope.getTotalCreditsPoints = function(){
+            return $scope.courses.reduce((sum , c) => sum + (c.gradePoint * c.credit), 0);
+        };
+        $scope.calculateSGPA = function() {
+          const totalCredits = $scope.getTotalCredits();
+          const totalPoints = $scope.getTotalCreditsPoints();
+          return totalCredits ? totalPoints / totalCredits : 0;
+        };
+
+        $scope.calculateCGPA = function(){
+            const previousCGPA = 9.45;
+          const totalSems = 5;
+            const currentSGPA = $scope.calculateSGPA();
+          const cgpa = ((previousCGPA * (totalSems - 1)) + currentSGPA) / totalSems;
+          return cgpa;
+        }
+
+        })
+    </script>
+</body>
+</html>

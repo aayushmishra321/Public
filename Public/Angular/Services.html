@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+
+<style>
+    .a {
+        background-color: antiquewhite;
+    }
+
+    .b {
+        background-color: aquamarine;
+    }
+
+    .c {
+        background-color: chocolate;
+    }
+
+    .d {
+        background-color: gold;
+    }
+
+    .e {
+        background-color: chartreuse;
+    }
+
+    p {
+        font-size: x-large;
+    }
+</style>
+
+<body>
+    <div ng-app="myApp" ng-controller="myCtrl">
+        <div class="a">
+            <p>The $timeout service runs a function after a specified number of milliseconds.</p>
+            <p>Following will change after 5 seconds</p>
+            <h1>{{myHeader}}</h1>
+        </div>
+
+        <div class="b">
+            <p>The $interval service is used to display the time with milliseconds.</p>
+            <p>Time is:</p>
+            <h1>{{theTime}}</h1>
+        </div>
+
+        <div class="c">
+            <p>Check the Browser console for logging information. (Use of log service)</p>
+        </div>
+
+        <div class="e">
+            <p>The Path of the current url:</p>
+            <p>{{path}}</p>
+        </div>
+
+        <div class="d">
+            <p>A custom service method that converts a given string to uppercase.</p>
+            <p>Original text:</p>
+            <h2>{{originalText}}</h2>
+
+            <p>Uppercase text:</p>
+            <h1>{{uppercasedText}}</h1>
+        </div>
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+
+        app.service('textService', function () {
+            this.toUpper = function (str) {
+                return str.toUpperCase();
+            }
+        });
+
+        app.controller('myCtrl', function ($scope, $interval, $timeout, $log, $location, $window, textService) {
+
+            $window.alert("Welcome to the AngularJS Demo Page!");
+
+            $scope.myHeader = "Aayush";
+
+            $timeout(function () {
+                $scope.myHeader = "Is a sakec student";
+            }, 5000);
+
+            // $scope.theTime = new Date().toLocaleTimeString();
+            $interval(function () {
+                $scope.theTime = new Date().toLocaleTimeString();
+            }, 1000);
+
+            $log.log("This is a log message");
+            $log.error("This is a error message");
+            $log.warn("This is a warning message");
+
+            $scope.path = $location.absUrl();
+
+            $scope.originalText = "sakec";
+            $scope.uppercasedText = textService.toUpper($scope.originalText);
+        });
+    </script>
+</body>
+</html>
