@@ -1,0 +1,55 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Student Data</title> 
+</head> 
+<body> 
+    <h1>Enter Students data</h1> 
+ 
+    
+    <h2>Enter Student Detials</h2> 
+    <form action="/addStudent" method="POST"> 
+        <input type="text" name="name" placeholder="Enter Name" required> 
+        <input type="text" name="rollno" placeholder="Enter Rollno" 
+required> 
+        <input type="text" name="prn" placeholder="Enter PRN" required> 
+        <input type="text" name="branch" placeholder="Enter Branch" 
+required> 
+        <input type="email" name="email" placeholder="Enter Email" 
+required> 
+        <button type="submit">Add User</button> 
+    </form> 
+ 
+    
+    <h2>Update User</h2> 
+    <form action="/updateStudent" method="POST"> 
+        <input type="text" name="prn" placeholder="Enter your PRN" 
+required> 
+        <input type="text" name="name" placeholder="New Name" required> 
+        <input type="text" name="rollno" placeholder="New Rollno" 
+required> 
+        <input type="text" name="branch" placeholder="Enter Branch" 
+required> 
+        <input type="email" name="email" placeholder="New Email" required> 
+        <button type="submit">Update User</button> 
+    </form> 
+ 
+ 
+    <h2>Delete User</h2> 
+    <form action="/deleteStudent" method="POST"> 
+        <input type="text" name="prn" placeholder="Enter PRN to Delete" 
+required> 
+        <button type="submit">Delete Student</button> 
+    </form> 
+ 
+    
+    <h2>All Users</h2> 
+    <a href="/getStudents">View all student</a> 
+    
+    
+ 
+    
+</body> 
+</html> 
